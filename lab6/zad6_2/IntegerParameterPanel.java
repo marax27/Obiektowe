@@ -1,6 +1,8 @@
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -22,6 +24,7 @@ public class IntegerParameterPanel extends JPanel {
 	public IntegerParameterPanel(String label_message) {
 		super(new GridBagLayout());
 		initialize(label_message);
+		setupEvents();
 	}
 
 	protected void initialize(String label_message){
@@ -68,7 +71,32 @@ public class IntegerParameterPanel extends JPanel {
 		add(button_decrement, c);*/
 	}
 
+	protected void setupEvents(){
+		// Value decrementation.
+		button_decrement.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				int value = Integer.parseInt(text_field.getText());
+				if(value > 0)
+					text_field.setText(Integer.toString(value-1));
+			}
+		});
+
+		// Value incrementation.
+		button_increment.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				int value = Integer.parseInt(text_field.getText());
+				text_field.setText(Integer.toString(value+1));
+			}
+		});
+	}
+
 	public JTextField getTextField(){
 		return text_field;
+	}
+	public JButton getDecrementButton(){
+		return button_decrement;
+	}
+	public JButton getIncrementButton(){
+		return button_increment;
 	}
 }

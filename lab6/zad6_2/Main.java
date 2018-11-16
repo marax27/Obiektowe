@@ -7,7 +7,8 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Color;
 import java.awt.Frame;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -16,12 +17,14 @@ import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
 import javax.swing.UIManager;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
-public class Main{
+public class Main {
 	private JFrame frame;
 	private JPanel main_panel;
 	private GraphCanvas canvas;
@@ -32,12 +35,14 @@ public class Main{
 	                   txtfield_ymin,
 	                   txtfield_ymax,
 	                   txtfield_stepsize,
-	                   txtfield_polydegree;
+	                   txtfield_polynomial_degree;
+	// ...
 
 	private JLabel label_infodump;
 
 	Main(){
 		initialize();
+		setupEvents();
 	}
 
 	public static void main(String[] args){
@@ -101,15 +106,9 @@ public class Main{
 		sidebar_panel.addToUpper(pp);
 
 		IntegerParameterPanel ipp = new IntegerParameterPanel("polynomial degree:");
-		txtfield_polydegree = ipp.getTextField();
+		txtfield_polynomial_degree = ipp.getTextField();
 		sidebar_panel.addToUpper(ipp);
 
-		String[] s = {"abc", "129312", "r0iu9ajs", "+"};
-		for(int i=0; i!=4; ++i){
-			// JButton btn = new JButton("Message" + i);
-			ParameterPanel pp1 = new ParameterPanel(s[i]);
-			sidebar_panel.addToLower(pp1);
-		}
 		main_panel.add(sidebar_panel, GBConstraintsFactory.getGBConstraints(1, 0));
 
 		// InfoDump label.
@@ -123,5 +122,19 @@ public class Main{
 		frame.add(main_panel);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+	}
+
+	private void setupEvents(){
+		txtfield_polynomial_degree.getDocument().addDocumentListener(new DocumentListener() {
+			@Override public void changedUpdate(DocumentEvent e) {}
+			@Override public void removeUpdate(DocumentEvent e) {}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// Update number of coefficient fields in the Coefficient panel.
+				int value = Integer.parseInt(txtfield_polynomial_degree.getText());
+				sidebar_panel.updatePolynomialDegree(value);
+			}
+		});
 	}
 }
