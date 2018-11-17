@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Color;
@@ -12,13 +13,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
 import javax.swing.SwingConstants;
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneLayout;
 import javax.swing.BoxLayout;
 import javax.swing.UIManager;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -131,6 +133,10 @@ public class Main {
 		frame.add(main_panel);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+
+		// Some extra work.
+		txtfield_polynomial_degree.setText("2");
+		sidebar_panel.updatePolynomialDegree(2);
 	}
 
 	private void setupEvents(){

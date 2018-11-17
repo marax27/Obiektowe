@@ -2,10 +2,12 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Stroke;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Font;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 
@@ -60,6 +62,7 @@ public class GraphCanvas extends JPanel {
 
 		paintGrid(g);
 		paintGraph(g);
+		paintValues(g);
 	}
 
 	private void paintGrid(Graphics g){
@@ -112,7 +115,7 @@ public class GraphCanvas extends JPanel {
 		}
 
 		Graphics2D g2d = (Graphics2D)g.create();
-		g2d.setColor(Color.RED);
+		g2d.setColor(Color.red);
 		g2d.setStroke(new BasicStroke(2));
 
 		for(int i = 1; i != sz; ++i){
@@ -121,6 +124,20 @@ public class GraphCanvas extends JPanel {
 				toScreenX(x_data.get(i)), toScreenY(y_data.get(i))
 			);
 		}
+	}
+
+	private void paintValues(Graphics g){
+		Graphics2D g2d = (Graphics2D)g.create();
+		g2d.setColor(Color.black);
+		g2d.setFont(g.getFont().deriveFont(Font.BOLD));
+
+		FontMetrics metrics = getFontMetrics(g2d.getFont());
+
+		g2d.drawString(Double.toString(y_min), 5, getHeight()-15);
+		g2d.drawString(Double.toString(y_max), 5, 10);
+		g2d.drawString(Double.toString(x_min), 15, getHeight()-5);
+		String x_max_str = Double.toString(x_max);
+		g2d.drawString(x_max_str, getWidth()-5-metrics.stringWidth(x_max_str), getHeight()-5);
 	}
 
 	private void drawHorizontal(Graphics2D g2d, double y){

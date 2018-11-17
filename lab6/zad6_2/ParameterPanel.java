@@ -28,7 +28,7 @@ public class ParameterPanel extends JPanel {
 		// used in runtime.
 		text_field = new JTextField("1234.12345");
 		text_field.setPreferredSize(text_field.getPreferredSize());
-		text_field.setText("");
+		text_field.setText("0");
 		c = GBConstraintsFactory.getGBConstraints(1, 0);
 		c.anchor = GridBagConstraints.EAST;
 		c.weightx = 1.0;
