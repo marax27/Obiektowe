@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.Vector;
 
 
@@ -37,6 +38,45 @@ public class GraphMath {
 		return result;
 	}
 
+	public static String polynomialToString(double[] coefficients){
+		StringBuilder sb = new StringBuilder();
+		boolean largest = true;
+		DecimalFormat df = new DecimalFormat("0.###");
+
+		for(int i = coefficients.length-1; i >= 0; --i){
+			double a_i = coefficients[i];
+			if(a_i == 0.0)
+				continue;
+
+			// Coefficient a_i, with sign.
+			if(largest){
+				if(Math.abs(a_i) != 1.0 || i == 0)
+					sb.append(df.format(a_i));
+				else if(a_i == -1)
+					sb.append('-');
+				largest = false;
+			}else{
+				sb.append(" " + (a_i > 0 ? "+ " : "- "));
+				if(Math.abs(a_i) != 1.0 || i == 0)
+					sb.append( df.format(Math.abs(a_i)) );
+			}
+
+			// x^i.
+			switch(i){
+				case 0:
+					break;
+				case 1:
+					sb.append("x");
+					break;
+				default:
+					sb.append("x^" + i);
+					break;
+			}
+		}
+
+		String result = sb.toString();
+		return result.isEmpty() ? "0" : result;
+	}
 
 	//--------------------------------------------------
 	public static class Point2D{

@@ -1,7 +1,12 @@
 import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.Border;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 
@@ -13,6 +18,7 @@ public class SidebarPanel extends JPanel {
 	               control_panel;
 
 	public SidebarPanel(){
+		setLayout(new GridBagLayout());
 		initialize();
 	}
 
@@ -33,13 +39,25 @@ public class SidebarPanel extends JPanel {
 			BorderFactory.createEtchedBorder(), "Coefficients"
 		));
 
+		JScrollPane scroll_lower = new JScrollPane(lower_panel);
+		scroll_lower.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+
 		// Control panel.
 		control_panel = new JPanel(new GridLayout(1, 0));
 		control_panel.setBorder(BorderFactory.createEtchedBorder());
 
-		add(upper_panel);
-		add(lower_panel);
-		add(control_panel);
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.gridx = 0;
+		c.anchor = GridBagConstraints.NORTH;
+
+		add(upper_panel, c);
+		c.weighty = 1;
+		// add(lower_panel, c);
+		add(scroll_lower, c);
+		c.weighty = 0;
+		add(control_panel, c);
 	}
 
 	// Add a component to upper_panel.

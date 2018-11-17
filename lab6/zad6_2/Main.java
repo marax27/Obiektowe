@@ -89,7 +89,7 @@ public class Main {
 		main_panel.add(canvas, c);
 
 		sidebar_panel = new SidebarPanel();
-		sidebar_panel.setLayout(new BoxLayout(sidebar_panel, BoxLayout.Y_AXIS));
+		// sidebar_panel.setLayout(new BoxLayout(sidebar_panel, BoxLayout.Y_AXIS));
 
 		// Upper part of sidebar.
 		ParameterPanel pp;
@@ -117,7 +117,9 @@ public class Main {
 		txtfield_polynomial_degree = ipp.getTextField();
 		sidebar_panel.addToUpper(ipp);
 
-		main_panel.add(sidebar_panel, GBConstraintsFactory.getGBConstraints(1, 0));
+		c = GBConstraintsFactory.getGBConstraints(1, 0);
+		c.fill = GridBagConstraints.VERTICAL;
+		main_panel.add(sidebar_panel, c);
 
 		button_draw = new JButton("Draw");
 		sidebar_panel.addToControl(button_draw);
@@ -207,6 +209,9 @@ public class Main {
 
 					canvas.revalidate();
 					canvas.repaint();
+
+					String polynomial = GraphMath.polynomialToString(coefficients);
+					label_infodump.setText("Plotted W(x) = " + polynomial);
 
 				}catch(RuntimeException exc){
 					label_infodump.setText("[ERROR] " + exc.getMessage());
