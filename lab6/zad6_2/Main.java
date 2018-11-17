@@ -80,8 +80,11 @@ public class Main {
 		));
 		main_panel.setPreferredSize(new Dimension(300, 150));*/
 
-		canvas = new GraphCanvas(new Dimension(400, 400));
-		main_panel.add(canvas, GBConstraintsFactory.getGBConstraints(0, 0));
+		canvas = new GraphCanvas();
+		GridBagConstraints c = GBConstraintsFactory.getGBConstraints(0, 0);
+		c.weightx = c.weighty = 1.0;
+		c.fill = GridBagConstraints.BOTH;
+		main_panel.add(canvas, c);
 
 		sidebar_panel = new SidebarPanel();
 		sidebar_panel.setLayout(new BoxLayout(sidebar_panel, BoxLayout.Y_AXIS));
@@ -119,7 +122,7 @@ public class Main {
 
 		// InfoDump label.
 		label_infodump = new JLabel("Hello!", SwingConstants.LEFT);
-		GridBagConstraints c = GBConstraintsFactory.getGBConstraints(0, 1);
+		c = GBConstraintsFactory.getGBConstraints(0, 1);
 		c.gridwidth = 2;
 		c.anchor = GridBagConstraints.WEST;
 		c.insets = new Insets(2, 4, 2, 4);
@@ -162,7 +165,14 @@ public class Main {
 					double y_max = Double.parseDouble(txtfield_ymax.getText());
 
 					// Send data to canvas.
-					canvas.updatePlotData(xy, x_min, x_max, y_min, y_max);
+					// canvas.updatePlotData(xy, x_min, x_max, y_min, y_max);
+					Dimension new_dim = new Dimension(
+						(int)(40 * (x_max - x_min)),
+						(int)(40 * (y_max - y_min))
+					);
+					canvas.setSize(new_dim);
+					canvas.revalidate();
+					canvas.repaint();
 
 				}catch(NumberFormatException exc){
 					label_infodump.setText("[ERROR] Invalid value - please enter valid number in 'General' panel.");
