@@ -24,6 +24,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
+import java.util.Vector;
+
 public class Main {
 	private JFrame frame;
 	private JPanel main_panel;
@@ -36,7 +38,8 @@ public class Main {
 	                   txtfield_ymax,
 	                   txtfield_stepsize,
 	                   txtfield_polynomial_degree;
-	// ...
+	
+	private JButton button_draw;
 
 	private JLabel label_infodump;
 
@@ -111,6 +114,9 @@ public class Main {
 
 		main_panel.add(sidebar_panel, GBConstraintsFactory.getGBConstraints(1, 0));
 
+		button_draw = new JButton("Draw");
+		sidebar_panel.addToControl(button_draw);
+
 		// InfoDump label.
 		label_infodump = new JLabel("Hello!", SwingConstants.LEFT);
 		GridBagConstraints c = GBConstraintsFactory.getGBConstraints(0, 1);
@@ -134,6 +140,35 @@ public class Main {
 				// Update number of coefficient fields in the Coefficient panel.
 				int value = Integer.parseInt(txtfield_polynomial_degree.getText());
 				sidebar_panel.updatePolynomialDegree(value);
+			}
+		});
+
+		// Graph plotting.
+		button_draw.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				try{
+					// Gather necessary data.
+					double[] coefficients = sidebar_panel.getCoefficients();
+					double x_min = Double.parseDouble(txtfield_xmin.getText());
+					double x_max = Double.parseDouble(txtfield_xmax.getText());
+					double step = Double.parseDouble(txtfield_stepsize.getText());
+
+					// Compute graph points.
+					Vector<GraphMath.Point2D> xy = GraphMath.plotPolynomial(
+						coefficients, x_min, x_max, step
+					);
+
+					double y_min = Double.parseDouble(txtfield_ymin.getText());
+					double y_max = Double.parseDouble(txtfield_ymax.getText());
+
+					// Send data to canvas.
+					canvas.updatePlotData(xy, x_min, x_max, y_min, y_max);
+
+				}catch(NumberFormatException exc){
+					label_infodump.setText("[ERROR] Invalid value - please enter valid number in 'General' panel.");
+				}catch(RuntimeException exc){
+					label_infodump.setText(exc.getMessage());
+				}
 			}
 		});
 	}

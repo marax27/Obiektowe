@@ -1,4 +1,5 @@
 import java.awt.Component;
+import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
@@ -7,8 +8,9 @@ import javax.swing.BoxLayout;
 import java.lang.Math;
 
 public class SidebarPanel extends JPanel {
-	private JPanel upper_panel;
-	private JPanel lower_panel;
+	private JPanel upper_panel,
+	               lower_panel,
+	               control_panel;
 
 	public SidebarPanel(){
 		initialize();
@@ -17,30 +19,44 @@ public class SidebarPanel extends JPanel {
 	private void initialize(){
 		this.setBorder(BorderFactory.createEtchedBorder());
 
+		// Upper panel.
 		upper_panel = new JPanel();
 		upper_panel.setLayout(new BoxLayout(upper_panel, BoxLayout.Y_AXIS));
 		upper_panel.setBorder(BorderFactory.createTitledBorder(
 			BorderFactory.createEtchedBorder(), "General"
 		));
+
+		// Lower panel.
 		lower_panel = new JPanel();
 		lower_panel.setLayout(new BoxLayout(lower_panel, BoxLayout.Y_AXIS));
 		lower_panel.setBorder(BorderFactory.createTitledBorder(
 			BorderFactory.createEtchedBorder(), "Coefficients"
 		));
 
+		// Control panel.
+		control_panel = new JPanel(new GridLayout(1, 0));
+		control_panel.setBorder(BorderFactory.createEtchedBorder());
+
 		add(upper_panel);
 		add(lower_panel);
+		add(control_panel);
 	}
 
-	// Add a component to upper panel.
+	// Add a component to upper_panel.
 	public Component addToUpper(Component c){
 		upper_panel.add(c);
 		return c;
 	}
 
-	// Add a component to lower panel.
+	// Add a component to lower_panel.
 	public Component addToLower(Component c){
 		lower_panel.add(c);
+		return c;
+	}
+
+	// Add a component to control_panel.
+	public Component addToControl(Component c){
+		control_panel.add(c);
 		return c;
 	}
 
@@ -80,5 +96,27 @@ public class SidebarPanel extends JPanel {
 
 		lower_panel.revalidate();
 		lower_panel.repaint();
+	}
+
+	public double[] getCoefficients(){
+		// Read coefficients from all lower_panel fields.
+
+		int n = lower_panel.getComponents().length;
+		double[] result = new double[n];
+
+		for(int i = 0; i != n; ++i){
+			String txt = "";
+				ParameterPanel pp = (ParameterPanel)(lower_panel.getComponent(i));
+			try{
+				txt = pp.getTextField().getText();
+				result[i] = Double.parseDouble(txt);
+			}catch(Exception exc){
+				throw new RuntimeException(
+					String.format("[ERROR] Not a valid number: '%s'", txt
+				));
+			}
+		}
+
+		return result;
 	}
 }
