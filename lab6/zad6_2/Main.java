@@ -165,12 +165,14 @@ public class Main {
 					double y_max = Double.parseDouble(txtfield_ymax.getText());
 
 					// Send data to canvas.
-					// canvas.updatePlotData(xy, x_min, x_max, y_min, y_max);
-					Dimension new_dim = new Dimension(
+					canvas.updateGraphData(xy, x_min, x_max, y_min, y_max);
+					/*Dimension new_dim = new Dimension(
 						(int)(40 * (x_max - x_min)),
 						(int)(40 * (y_max - y_min))
 					);
-					canvas.setSize(new_dim);
+					canvas.setSize(new_dim);*/
+					canvas.revalidate();
+					canvas.repaint();
 					canvas.revalidate();
 					canvas.repaint();
 

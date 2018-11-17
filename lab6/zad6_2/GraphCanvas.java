@@ -21,6 +21,28 @@ public class GraphCanvas extends JPanel {
 		scale_x = scale_y = 40;
 		x_min = y_min = 0.0;
 		x_max = y_max = 10.0;
+		x_data = null;
+		y_data = null;
+	}
+
+	public void updateGraphData(Vector<GraphMath.Point2D> points,
+		double minx, double maxx, double miny, double maxy){
+		
+			x_min = minx;
+			x_max = maxx;
+			y_min = miny;
+			y_max = maxy;
+
+			updateScale();
+
+			if(points != null){
+				x_data = new Vector<Integer>();
+				y_data = new Vector<Integer>();
+				for(GraphMath.Point2D p : points){
+					x_data.add(toScreenX(p.x));
+					y_data.add(toScreenY(p.y));
+				}
+			}
 	}
 
 	//--------------------------------------------------
@@ -28,12 +50,22 @@ public class GraphCanvas extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		setBackground(Color.white);
+		updateScale();
+
+		/*System.out.format("-> v(%d, %d), x[%f, %f], y[%f, %f]",
+			x_data == null ? -1 : x_data.size(),
+			y_data == null ? -1 : y_data.size(),
+			x_min, x_max, y_min, y_max
+		);
+		if(x_data != null && y_data != null){
+		System.out.format(" x: {%d, %d, ...}, y: {%d, %d, ...}\n",
+			x_data.get(0), x_data.get(1), x_data.get(2),
+			y_data.get(0), y_data.get(1), y_data.get(2)
+		);
+		}*/
 
 		paintGrid(g);
-		
-		Dimension dim = getSize();
-		g.setColor(Color.black);
-		g.drawOval(0, 0, dim.width, dim.height);
+		paintGraph(g);
 	}
 
 	private void paintGrid(Graphics g){
@@ -42,12 +74,6 @@ public class GraphCanvas extends JPanel {
 		Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{4}, 0);
 		
 		updateScale();
-
-		// Coordinate system axes.
-		g2d.setStroke(new BasicStroke(4));
-		g2d.setColor(Color.black);
-		drawHorizontal(g2d, 0);
-		drawVertical(g2d, 0);
 
 		g2d.setColor(new Color(0x99, 0x99, 0x99));
 		g2d.setStroke(dashed);
@@ -65,6 +91,29 @@ public class GraphCanvas extends JPanel {
 			drawHorizontal(g2d, y);
 			y += 1.0;
 		}
+
+		// Coordinate system axes.
+		g2d.setStroke(new BasicStroke(3));
+		g2d.setColor(Color.black);
+		drawHorizontal(g2d, 0);
+		drawVertical(g2d, 0);
+	}
+
+	private void paintGraph(Graphics g){
+		if(x_data == null || y_data == null)
+			return;
+		
+		int sz = x_data.size();
+		if(sz != y_data.size()){
+			System.out.println("[WARNING] X_data & Y_data mismatch.");
+			return;
+		}
+
+		g.setColor(Color.RED);
+		Graphics2D g2d = (Graphics2D)g.create();
+
+		for(int i = 1; i != sz; ++i)
+			g.drawLine(x_data.get(i-1), y_data.get(i-1), x_data.get(i), y_data.get(i));
 	}
 
 	private void drawHorizontal(Graphics2D g2d, double y){
@@ -94,6 +143,8 @@ public class GraphCanvas extends JPanel {
 
 	private double scale_x, scale_y;
 	private double x_min, x_max, y_min, y_max;
+	private Vector<Integer> x_data;
+	private Vector<Integer> y_data;
 }
 
 
