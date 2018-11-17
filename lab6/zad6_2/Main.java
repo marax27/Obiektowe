@@ -152,34 +152,58 @@ public class Main {
 				try{
 					// Gather necessary data.
 					double[] coefficients = sidebar_panel.getCoefficients();
-					double x_min = Double.parseDouble(txtfield_xmin.getText());
-					double x_max = Double.parseDouble(txtfield_xmax.getText());
-					double step = Double.parseDouble(txtfield_stepsize.getText());
+					double x_min, x_max, step, y_min, y_max;
+					
+					// Min x.
+					try{
+						x_min = Double.parseDouble(txtfield_xmin.getText());
+					}catch(NumberFormatException exc){
+						throw new RuntimeException("Min. x is not a valid number: '" + txtfield_xmin.getText() + "'.");
+					}
+
+					// Max x.
+					try{
+						x_max = Double.parseDouble(txtfield_xmax.getText());
+					}catch(NumberFormatException exc){
+						throw new RuntimeException("Max. x is not a valid number: '" + txtfield_xmax.getText() + "'.");
+					}
+
+					// Step size.
+					try{
+						step = Double.parseDouble(txtfield_stepsize.getText());
+					}catch(NumberFormatException exc){
+						throw new RuntimeException("Step size is not a valid number: '" + txtfield_stepsize.getText() + "'.");
+					}
+					if(step <= 0.0)
+						throw new RuntimeException("Invalid step size: " + step + ". It must be greater than 0.");
 
 					// Compute graph points.
 					Vector<GraphMath.Point2D> xy = GraphMath.plotPolynomial(
 						coefficients, x_min, x_max, step
 					);
 
-					double y_min = Double.parseDouble(txtfield_ymin.getText());
-					double y_max = Double.parseDouble(txtfield_ymax.getText());
+					// Min y.
+					try{
+						y_min = Double.parseDouble(txtfield_ymin.getText());
+					}catch(NumberFormatException exc){
+						throw new RuntimeException("Min. y is not a valid number: '" + txtfield_ymin.getText() + "'.");
+					}
+
+					// Max y.
+					try{
+						y_max = Double.parseDouble(txtfield_ymax.getText());
+					}catch(NumberFormatException exc){
+						throw new RuntimeException("Max. y is not a valid number: '" + txtfield_ymax.getText() + "'.");
+					}
 
 					// Send data to canvas.
 					canvas.updateGraphData(xy, x_min, x_max, y_min, y_max);
-					/*Dimension new_dim = new Dimension(
-						(int)(40 * (x_max - x_min)),
-						(int)(40 * (y_max - y_min))
-					);
-					canvas.setSize(new_dim);*/
-					canvas.revalidate();
-					canvas.repaint();
+
 					canvas.revalidate();
 					canvas.repaint();
 
-				}catch(NumberFormatException exc){
-					label_infodump.setText("[ERROR] Invalid value - please enter valid number in 'General' panel.");
 				}catch(RuntimeException exc){
-					label_infodump.setText(exc.getMessage());
+					label_infodump.setText("[ERROR] " + exc.getMessage());
 				}
 			}
 		});

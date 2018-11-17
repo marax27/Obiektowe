@@ -112,7 +112,7 @@ public class SidebarPanel extends JPanel {
 				result[i] = Double.parseDouble(txt);
 			}catch(Exception exc){
 				throw new RuntimeException(
-					String.format("[ERROR] Not a valid number: '%s'", txt
+					String.format("Invalid coefficient (not a valid number: '%s').", txt
 				));
 			}
 		}
