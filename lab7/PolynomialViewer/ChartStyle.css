@@ -1,0 +1,6 @@
+
+
+.chart-vertical-grid-lines, .chart-horizontal-grid-lines {
+    -fx-stroke: #aaa;
+}
+

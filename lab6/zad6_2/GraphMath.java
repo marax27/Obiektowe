@@ -4,8 +4,7 @@ import java.util.Vector;
 
 // The class responsible for graph-related computations.
 public class GraphMath {
-
-	public static Vector<Point2D> plotPolynomial(
+public static Vector<Point2D> plotPolynomial(
 		double[] coefficients, double x_min, double x_max, double dx) {
 		
 		// Compute all necessary points of a polynomial
@@ -93,5 +92,6 @@ public class GraphMath {
 		}
 	}
 	//--------------------------------------------------
+	
 
 }

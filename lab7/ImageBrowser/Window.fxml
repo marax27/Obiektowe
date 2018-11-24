@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.CustomMenuItem?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+
+<VBox fx:id="main_container" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ImageBrowser.Controller">
+
+    <MenuBar fx:id="menuBar">
+        <menus>
+            <Menu text="File">
+                <items>
+                    <MenuItem onAction="#chooseDir" text="Open" />
+                    <SeparatorMenuItem />
+                    <MenuItem onAction="#exitApp" text="Exit" />
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+
+    <ScrollPane fx:id="scroll_content" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
+        <FlowPane fx:id="content_pane" hgap="5.0" prefWrapLength="0.0" vgap="5.0">
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+
+        </FlowPane>
+    </ScrollPane>
+</VBox>
