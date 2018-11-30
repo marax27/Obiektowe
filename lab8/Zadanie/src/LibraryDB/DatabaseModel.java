@@ -73,6 +73,10 @@ public class DatabaseModel {
         try {
             Statement st = connection.createStatement();
             LinkedList<Book> result = new LinkedList<Book>();
+            
+            // Basic sanitization.
+            if(value.contains("'"))
+                return result;
 
             String condition = null;
             switch(attribute){
