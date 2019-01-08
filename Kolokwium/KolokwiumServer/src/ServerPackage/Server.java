@@ -2,12 +2,7 @@ package ServerPackage;
 
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 public class Server {
     DatabaseModel database;
@@ -32,7 +27,7 @@ public class Server {
         while(true){
             // Accept a new client.
             Socket client = server.accept();
-            
+
             // Obtain username of the winner.
             Scanner sc = new Scanner(client.getInputStream());
             String winner_name = sc.nextLine();

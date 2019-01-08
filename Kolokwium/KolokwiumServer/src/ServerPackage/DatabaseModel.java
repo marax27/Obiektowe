@@ -29,15 +29,13 @@ public class DatabaseModel {
 
     public boolean addRecord(Winner winner){
         try{
-            System.out.println(">>>");
             Statement st = connection.createStatement();
-            System.out.println(">>>");
             st.executeUpdate(
-                "INSERT INTO winners (name) VALUES ("
-                + winner.getName() + ");"
+                "INSERT INTO winners (name) VALUES ('"
+                + winner.getName() + "')"
             );
-            System.out.println(">>>");
         }catch(SQLException exc){
+            System.out.println(exc);
             last_sql_error = exc;
             return false;
         }catch(Exception e){
