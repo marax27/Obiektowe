@@ -54,8 +54,14 @@ public class Controller {
             output = new PrintWriter(server.getOutputStream(), true);
 
             output.println(username_textfield.getText());
-
             display("Connected succesfully");
+
+            String response = input.readLine();
+            if(response.equals("OK") || response.equals("OK\n"))
+            display("Result saved succesfully");
+
+            server_conn_box.setVisible(false);
+            server.close();
         }catch(Exception exc) {
             display("Failed to connect");
         }
