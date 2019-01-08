@@ -22,7 +22,6 @@ public class DatabaseModel {
         }catch(SQLException e){
             last_sql_error = e;
         }catch(Exception e){
-            System.out.println("Bloody hell!!!!!!!");
             e.printStackTrace();
         }
         return false;
@@ -30,11 +29,14 @@ public class DatabaseModel {
 
     public boolean addRecord(Winner winner){
         try{
+            System.out.println(">>>");
             Statement st = connection.createStatement();
+            System.out.println(">>>");
             st.executeUpdate(
                 "INSERT INTO winners (name) VALUES ("
                 + winner.getName() + ");"
             );
+            System.out.println(">>>");
         }catch(SQLException exc){
             last_sql_error = exc;
             return false;

@@ -18,6 +18,7 @@ public class Server {
     public Server(int _port){
         port = _port;
         database = new DatabaseModel();
+        database.connect();
     }
 
     public void run() throws IOException {
