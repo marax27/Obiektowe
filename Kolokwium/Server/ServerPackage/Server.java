@@ -38,11 +38,12 @@ public class Server {
             System.out.println("New winner: " + winner_name);
 
             // Save to database.
-            Winner w = new Winner(winner_name);
-            database.addRecord(w);
+            boolean res = database.addRecord(new Winner(winner_name));
+            System.out.println("Success: " + res);
 
             // Confirm success and close connection.
             (new PrintStream(client.getOutputStream())).println("OK");
+            sc.close();
             client.close();
         }
     }

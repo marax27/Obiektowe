@@ -32,11 +32,14 @@ public class DatabaseModel {
         try{
             Statement st = connection.createStatement();
             st.executeUpdate(
-                "INSERT INTO winners (name) VALUES "
-                + winner.getName()
+                "INSERT INTO winners (name) VALUES ("
+                + winner.getName() + ");"
             );
         }catch(SQLException exc){
             last_sql_error = exc;
+            return false;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
             return false;
         }
         return true;

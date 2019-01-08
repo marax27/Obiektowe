@@ -53,9 +53,9 @@ public class Controller {
             input = new BufferedReader(new InputStreamReader(server.getInputStream()));
             output = new PrintWriter(server.getOutputStream(), true);
 
-            output.println();
+            output.println(username_textfield.getText());
 
-            display("Connected");
+            display("Connected succesfully");
         }catch(Exception exc) {
             display("Failed to connect");
         }
