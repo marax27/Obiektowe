@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,15 +18,17 @@ public class Controller {
     @FXML private Label top_label;
     @FXML private TextField username_textfield;
 
-    @FXML Button b1;
-    @FXML Button b2;
-    @FXML Button b3;
-    @FXML Button b4;
-    @FXML Button b5;
-    @FXML Button b6;
-    @FXML Button b7;
-    @FXML Button b8;
-    @FXML Button b9;
+    @FXML private Button b1;
+    @FXML private Button b2;
+    @FXML private Button b3;
+    @FXML private Button b4;
+    @FXML private Button b5;
+    @FXML private Button b6;
+    @FXML private Button b7;
+    @FXML private Button b8;
+    @FXML private Button b9;
+
+    @FXML private HBox server_conn_box;
 
     private Socket server;
     private BufferedReader input;
@@ -50,7 +53,7 @@ public class Controller {
             input = new BufferedReader(new InputStreamReader(server.getInputStream()));
             output = new PrintWriter(server.getOutputStream(), true);
 
-            output.println("");
+            output.println();
 
             display("Connected");
         }catch(Exception exc) {
@@ -82,11 +85,18 @@ public class Controller {
 
     //--------------------------
 
-    @FXML private void playGame(ActionEvent e){
+    @FXML private void newGame(ActionEvent e){
         clearBoard();
         x_turn = true;
         in_game = true;
         updateTopLabel();
+        server_conn_box.setVisible(false);
+    }
+
+    private void endGame(){
+        in_game = false;
+        top_label.setText("Player " + getWinner() + " has won!");
+        server_conn_box.setVisible(true);
     }
 
     private void updateTopLabel(){
@@ -103,11 +113,6 @@ public class Controller {
     }
 
     //--------------------------
-
-    private void endGame(){
-        in_game = false;
-        top_label.setText("Player " + getWinner() + " has won!");
-    }
 
     private String getWinner(){
         String[] d = {

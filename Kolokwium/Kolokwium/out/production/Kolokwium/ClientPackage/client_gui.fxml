@@ -1,18 +1,19 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<GridPane fx:controller="ClientPackage.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
 
-    <VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
-        <Label fx:id="top_label"/>
+<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121" fx:controller="ClientPackage.Controller">
+
+    <VBox alignment="TOP_CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <Label fx:id="top_label" />
+        <Button onAction="#newGame">Play</Button>
     </VBox>
 
     <GridPane fx:id="gameboard" GridPane.columnIndex="0" GridPane.rowIndex="1">
@@ -27,13 +28,31 @@
             <Button fx:id="b8" onAction="#handleClick" prefHeight="80.0" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Button fx:id="b9" onAction="#handleClick" prefHeight="80.0" prefWidth="80.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
         </children>
+      <columnConstraints>
+         <ColumnConstraints />
+         <ColumnConstraints />
+         <ColumnConstraints />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+      </rowConstraints>
     </GridPane>
 
-    <HBox GridPane.columnIndex="0" GridPane.rowIndex="2">
-        <TextField fx:id="username_textfield" promptText="Username"/>
-        <Button onAction="#connectToServer">Connect</Button>
-        <Button onAction="#playGame">Play</Button>
+    <HBox fx:id="server_conn_box" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="2">
+        <TextField fx:id="username_textfield" promptText="Winner name" />
+        <Button onAction="#connectToServer">Save result</Button>
     </HBox>
 
-    <Label fx:id="info_label" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <Label fx:id="info_label" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>
